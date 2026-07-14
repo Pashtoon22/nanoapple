@@ -82,7 +82,7 @@ function Home() {
               <Sparkles className="h-5 w-5" />
             </div>
             <div>
-              <h1 className="text-lg font-semibold tracking-tight">Lumen</h1>
+              <h1 className="text-lg font-semibold tracking-tight">Future Bright</h1>
               <p className="text-xs text-neutral-400">Free AI image generator</p>
             </div>
           </div>
