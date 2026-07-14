@@ -371,55 +371,52 @@ function Home() {
               {/* image grid */}
               {shown.length === 0 && !mutation.isPending ? (
                 <EmptyState onSuggest={setPrompt} />
+              ) : mutation.isPending ? (
+                <GridSkeleton count={count} />
               ) : (
-                <div className="space-y-6">
-                  {mutation.isPending && (
-                    <GridSkeleton count={count} />
-                  )}
-                  <AnimatePresence>
-                    {shown.map((r, ri) => (
-                      <motion.div
-                        key={ri + r.prompt}
-                        initial={{ opacity: 0, y: 12 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.35 }}
-                        className="space-y-4"
+                <AnimatePresence>
+                  {shown.map((r, ri) => (
+                    <motion.div
+                      key={ri + r.prompt}
+                      initial={{ opacity: 0, y: 12 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.35 }}
+                      className="space-y-4"
+                    >
+                      <div
+                        className={`grid gap-4 ${
+                          r.urls.length === 1
+                            ? "grid-cols-1"
+                            : r.urls.length === 2
+                              ? "grid-cols-1 sm:grid-cols-2"
+                              : "grid-cols-1 sm:grid-cols-2"
+                        }`}
                       >
-                        <div
-                          className={`grid gap-4 ${
-                            r.urls.length === 1
-                              ? "grid-cols-1"
-                              : r.urls.length === 2
-                                ? "grid-cols-1 sm:grid-cols-2"
-                                : "grid-cols-1 sm:grid-cols-2"
-                          }`}
-                        >
-                          {r.urls.map((url, i) => (
-                            <motion.div
-                              key={i}
-                              whileHover={{ scale: 1.015 }}
-                              transition={{ type: "spring", stiffness: 300, damping: 25 }}
-                              className="group relative overflow-hidden rounded-2xl border border-white/10 bg-black shadow-[0_10px_40px_rgba(0,0,0,0.4)] hover:border-purple-500/40 hover:shadow-[0_0_40px_rgba(139,92,246,0.3)]"
+                        {r.urls.map((url, i) => (
+                          <motion.div
+                            key={i}
+                            whileHover={{ scale: 1.015 }}
+                            transition={{ type: "spring", stiffness: 300, damping: 25 }}
+                            className="group relative overflow-hidden rounded-2xl border border-white/10 bg-black shadow-[0_10px_40px_rgba(0,0,0,0.4)] hover:border-purple-500/40 hover:shadow-[0_0_40px_rgba(139,92,246,0.3)]"
+                          >
+                            <img
+                              src={url}
+                              alt={r.prompt}
+                              className="h-full w-full object-cover"
+                            />
+                            <button
+                              onClick={() => download(url, i)}
+                              className="absolute right-3 top-3 flex h-9 w-9 items-center justify-center rounded-xl border border-white/20 bg-black/60 opacity-0 backdrop-blur transition-all duration-300 hover:bg-purple-500/40 group-hover:opacity-100"
                             >
-                              <img
-                                src={url}
-                                alt={r.prompt}
-                                className="h-full w-full object-cover"
-                              />
-                              <button
-                                onClick={() => download(url, i)}
-                                className="absolute right-3 top-3 flex h-9 w-9 items-center justify-center rounded-xl border border-white/20 bg-black/60 opacity-0 backdrop-blur transition-all duration-300 hover:bg-purple-500/40 group-hover:opacity-100"
-                              >
-                                <Download className="h-4 w-4" />
-                              </button>
-                            </motion.div>
-                          ))}
-                        </div>
-                      </motion.div>
-                    ))}
-                  </AnimatePresence>
-                </div>
+                              <Download className="h-4 w-4" />
+                            </button>
+                          </motion.div>
+                        ))}
+                      </div>
+                    </motion.div>
+                  ))}
+                </AnimatePresence>
               )}
             </GlassCard>
 
