@@ -96,12 +96,10 @@ function Home() {
       return { urls: results.map((r) => r.imageUrl), ms };
     },
     onSuccess: (res) => {
-      setResults((prev) => [
-        { urls: res.urls, prompt: prompt.trim(), ms: res.ms },
-        ...prev,
-      ]);
+      setResults([{ urls: res.urls, prompt: prompt.trim(), ms: res.ms }]);
       toast.success(`Generated ${res.urls.length} image${res.urls.length > 1 ? "s" : ""}`);
     },
+
     onError: (err: Error) => toast.error(err.message),
   });
 
