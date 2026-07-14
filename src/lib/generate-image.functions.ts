@@ -38,9 +38,16 @@ export const generateImage = createServerFn({ method: "POST" })
     }
 
     const json = await res.json();
+    const msg = json?.choices?.[0]?.message;
+    const img = msg?.images?.[0];
     const imageUrl: string | undefined =
-      json?.choices?.[0]?.message?.images?.[0]?.image_url?.url;
+      (typeof img?.image_url === "string" ? img.image_url : img?.image_url?.url) ??
+      msg?.image_url?.url ??
+      (typeof msg?.content === "string" && msg.content.startsWith("data:image") ? msg.content : undefined);
 
-    if (!imageUrl) throw new Error("No image returned by model");
+    if (!imageUrl) {
+      console.error("Gemini image response:", JSON.stringify(json).slice(0, 2000));
+      throw new Error("No image returned by model");
+    }
     return { imageUrl };
   });
