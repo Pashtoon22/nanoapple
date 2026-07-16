@@ -1,314 +1,457 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import {
   Sparkles,
-  Zap,
   Wand2,
-  Palette,
-  Shield,
+  Image as ImageIcon,
+  Video,
+  Scissors,
+  Eraser,
+  Maximize2,
   ArrowRight,
-  Image,
-  Layers,
+  Menu,
+  X,
+  Star,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { SiteHeader } from "@/components/site/Header";
-import { SiteFooter } from "@/components/site/Footer";
 
 export const Route = createFileRoute("/")({
-  component: HomePage,
+  component: Landing,
   head: () => ({
     meta: [
-      { title: "Lumen — AI Image Generation Platform" },
+      { title: "360 Angle — Create Anything with AI" },
       {
         name: "description",
         content:
-          "Generate stunning AI images in seconds. Lumen is the fastest way to turn ideas into visuals.",
+          "360 Angle is a premium AI creative platform. Generate images, videos, edits, anime art, and more — all in one place.",
       },
-      {
-        property: "og:title",
-        content: "Lumen — AI Image Generation Platform",
-      },
+      { property: "og:title", content: "360 Angle — Create Anything with AI" },
       {
         property: "og:description",
         content:
-          "Generate stunning AI images in seconds. Lumen is the fastest way to turn ideas into visuals.",
+          "Premium AI creative platform for images, videos, editing, and more.",
       },
     ],
   }),
 });
 
-const features = [
+const NAV = [
+  { label: "Home", to: "/" },
+  { label: "AI Image", to: "/" },
+  { label: "AI Video", to: "/" },
+  { label: "AI Editor", to: "/" },
+  { label: "Pricing", to: "/pricing" },
+];
+
+const FEATURES = [
   {
     icon: Wand2,
     title: "Text to Image",
-    description:
-      "Type any idea and watch it become a high-quality image in seconds.",
+    desc: "Turn any prompt into a stunning, high-resolution image in seconds.",
+    gradient: "from-indigo-500 to-purple-500",
   },
   {
-    icon: Palette,
-    title: "Artistic Styles",
-    description:
-      "Choose from cinematic, photorealistic, anime, oil painting, and more.",
+    icon: ImageIcon,
+    title: "Image Editing",
+    desc: "Retouch, restyle, and transform any photo with a single prompt.",
+    gradient: "from-purple-500 to-fuchsia-500",
   },
   {
-    icon: Zap,
-    title: "Lightning Fast",
-    description:
-      "Optimized generation pipeline delivers results faster than ever.",
+    icon: Video,
+    title: "AI Video",
+    desc: "Generate cinematic, animated, and product videos from text.",
+    gradient: "from-cyan-500 to-blue-500",
   },
   {
-    icon: Shield,
-    title: "Safe by Default",
-    description:
-      "Built-in content checks help keep your creations appropriate.",
+    icon: Sparkles,
+    title: "Anime Generator",
+    desc: "Create expressive anime characters and scenes with a signature style.",
+    gradient: "from-pink-500 to-rose-500",
   },
   {
-    icon: Image,
-    title: "Any Aspect Ratio",
-    description: "Square, widescreen, portrait, classic — you choose.",
+    icon: Eraser,
+    title: "Background Remover",
+    desc: "Cut clean subjects out of any image with pixel-perfect edges.",
+    gradient: "from-emerald-500 to-teal-500",
   },
   {
-    icon: Layers,
-    title: "Batch Generation",
-    description: "Generate up to 4 images at once to find the perfect shot.",
+    icon: Maximize2,
+    title: "Upscaler",
+    desc: "Enhance detail and bring your images up to 4K in one click.",
+    gradient: "from-amber-500 to-orange-500",
   },
 ];
 
-const steps = [
+const ARTWORK = [
   {
-    step: "01",
-    title: "Describe your vision",
-    description: "Enter a prompt. Be as detailed or as simple as you like.",
+    src: "https://images.unsplash.com/photo-1618172193763-c511deb635ca?auto=format&fit=crop&w=600&q=80",
+    label: "Cyberpunk city",
   },
   {
-    step: "02",
-    title: "Pick a style",
-    description: "Select a look, quality level, and aspect ratio.",
+    src: "https://images.unsplash.com/photo-1614730321146-b6fa6a46bcb4?auto=format&fit=crop&w=600&q=80",
+    label: "Astronaut portrait",
   },
   {
-    step: "03",
-    title: "Generate & download",
-    description: "Get your images instantly and save them in one click.",
+    src: "https://images.unsplash.com/photo-1635776062043-223faf322554?auto=format&fit=crop&w=600&q=80",
+    label: "Fantasy warrior",
   },
 ];
 
-function HomePage() {
+function Landing() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [prompt, setPrompt] = useState("");
+
   return (
-    <div className="flex min-h-screen flex-col bg-background">
-      <SiteHeader />
+    <div className="relative min-h-screen overflow-hidden bg-[#05060d] font-sans text-white antialiased">
+      {/* Ambient background */}
+      <div className="pointer-events-none fixed inset-0 -z-10">
+        <div className="absolute -top-40 -left-40 h-[600px] w-[600px] rounded-full bg-indigo-600/30 blur-[140px]" />
+        <div className="absolute top-1/3 right-0 h-[500px] w-[500px] rounded-full bg-cyan-500/20 blur-[140px]" />
+        <div className="absolute bottom-0 left-1/2 h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-fuchsia-600/25 blur-[160px]" />
+        <div
+          className="absolute inset-0 opacity-[0.06]"
+          style={{
+            backgroundImage:
+              "linear-gradient(rgba(255,255,255,0.6) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.6) 1px,transparent 1px)",
+            backgroundSize: "48px 48px",
+          }}
+        />
+      </div>
 
-      <main className="flex-1">
-        {/* Hero */}
-        <section className="relative overflow-hidden px-4 pt-16 pb-24 md:pt-24 md:pb-32">
-          <div className="absolute inset-0 -z-10">
-            <div className="absolute top-0 left-1/2 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/5 blur-3xl" />
-            <div className="absolute bottom-0 right-0 h-[400px] w-[400px] rounded-full bg-accent/30 blur-3xl" />
+      {/* NAV */}
+      <header className="relative z-30">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
+          <Link to="/" className="flex items-center gap-2.5">
+            <div className="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-indigo-500 via-purple-500 to-cyan-400 shadow-[0_0_25px_rgba(139,92,246,0.5)]">
+              <span className="text-sm font-black">360</span>
+            </div>
+            <span className="text-lg font-semibold tracking-tight">
+              360 Angle
+            </span>
+          </Link>
+
+          <nav className="hidden items-center gap-8 text-sm text-neutral-300 md:flex">
+            {NAV.map((item) => (
+              <Link
+                key={item.label}
+                to={item.to}
+                className="transition-colors hover:text-white"
+              >
+                {item.label}
+              </Link>
+            ))}
+          </nav>
+
+          <div className="hidden items-center gap-3 md:flex">
+            <Button
+              variant="ghost"
+              className="text-neutral-200 hover:bg-white/5 hover:text-white"
+            >
+              Login
+            </Button>
+            <Button className="rounded-xl bg-gradient-to-r from-indigo-500 via-purple-500 to-cyan-400 text-white shadow-[0_0_25px_rgba(139,92,246,0.45)] hover:opacity-95">
+              Sign Up
+            </Button>
           </div>
 
-          <div className="mx-auto max-w-5xl text-center">
+          <button
+            className="grid h-10 w-10 place-items-center rounded-xl border border-white/10 bg-white/5 md:hidden"
+            onClick={() => setMenuOpen((v) => !v)}
+            aria-label="Toggle menu"
+          >
+            {menuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
+        </div>
+
+        {menuOpen && (
+          <div className="mx-6 mb-4 rounded-2xl border border-white/10 bg-white/[0.04] p-4 backdrop-blur-xl md:hidden">
+            <nav className="flex flex-col gap-3 text-sm">
+              {NAV.map((item) => (
+                <Link
+                  key={item.label}
+                  to={item.to}
+                  onClick={() => setMenuOpen(false)}
+                  className="text-neutral-300 hover:text-white"
+                >
+                  {item.label}
+                </Link>
+              ))}
+              <div className="mt-2 flex gap-2">
+                <Button variant="outline" className="flex-1 border-white/10 bg-white/5 text-white hover:bg-white/10">
+                  Login
+                </Button>
+                <Button className="flex-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-cyan-400 text-white">
+                  Sign Up
+                </Button>
+              </div>
+            </nav>
+          </div>
+        )}
+      </header>
+
+      {/* HERO */}
+      <section className="relative z-10 mx-auto max-w-7xl px-6 pt-12 pb-24 md:pt-20">
+        <div className="grid items-center gap-12 lg:grid-cols-[1.1fr_1fr]">
+          <div>
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
+              className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-1.5 text-xs text-neutral-300 backdrop-blur"
             >
-              <span className="inline-flex items-center gap-2 rounded-full border border-border bg-muted/50 px-4 py-1.5 text-sm font-medium text-muted-foreground">
-                <Sparkles className="h-4 w-4 text-primary" />
-                Free AI image generation
-              </span>
+              <Sparkles className="h-3.5 w-3.5 text-cyan-300" />
+              New — 360 Angle Studio v2 is live
             </motion.div>
 
             <motion.h1
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="mt-6 text-4xl font-bold tracking-tight text-foreground md:text-6xl lg:text-7xl"
+              transition={{ duration: 0.6, delay: 0.05 }}
+              className="mt-6 text-5xl font-bold leading-[1.05] tracking-tight md:text-6xl lg:text-7xl"
             >
-              Turn words into{" "}
-              <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
-                stunning visuals
+              Create Anything <br />
+              with{" "}
+              <span className="bg-gradient-to-r from-indigo-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent">
+                AI
               </span>
             </motion.h1>
 
             <motion.p
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground"
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="mt-5 max-w-xl text-base text-neutral-400 md:text-lg"
             >
-              Lumen helps creators, marketers, and designers generate beautiful,
-              royalty-free images from simple text prompts.
+              Generate realistic images, anime artwork, product photos,
+              cinematic videos, and professional edits — all in one premium
+              platform.
             </motion.p>
 
+            {/* Prompt box */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-              className="mt-8 flex flex-wrap items-center justify-center gap-4"
+              transition={{ duration: 0.6, delay: 0.15 }}
+              className="relative mt-8 rounded-2xl p-[1px]"
             >
-              <Button size="lg" asChild>
-                <Link to="/generate">
-                  Start Generating <ArrowRight className="h-4 w-4" />
-                </Link>
-              </Button>
-              <Button size="lg" variant="outline" asChild>
-                <Link to="/features">Explore Features</Link>
-              </Button>
+              <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-indigo-500/70 via-purple-500/70 to-cyan-400/70 opacity-70 blur-[1px]" />
+              <div className="relative flex flex-col gap-3 rounded-2xl border border-white/10 bg-[#0b0d18]/80 p-3 backdrop-blur-xl sm:flex-row sm:items-center">
+                <div className="flex flex-1 items-center gap-3 px-2">
+                  <Wand2 className="h-5 w-5 shrink-0 text-purple-300" />
+                  <input
+                    value={prompt}
+                    onChange={(e) => setPrompt(e.target.value)}
+                    placeholder="Describe anything you imagine..."
+                    className="w-full bg-transparent py-3 text-[15px] text-white placeholder:text-neutral-500 focus:outline-none"
+                  />
+                </div>
+                <Button className="h-11 shrink-0 rounded-xl bg-gradient-to-r from-indigo-500 via-purple-500 to-cyan-400 px-5 font-medium text-white shadow-[0_0_25px_rgba(139,92,246,0.5)] hover:opacity-95">
+                  <Sparkles className="h-4 w-4" />
+                  Generate
+                </Button>
+              </div>
             </motion.div>
 
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.4 }}
-              className="mt-12 flex flex-wrap items-center justify-center gap-8 text-sm text-muted-foreground"
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="mt-5 flex flex-wrap gap-2 text-xs text-neutral-400"
             >
-              <span className="flex items-center gap-1.5">
-                <Zap className="h-4 w-4 text-primary" /> Fast
-              </span>
-              <span className="flex items-center gap-1.5">
-                <Shield className="h-4 w-4 text-primary" /> Safe
-              </span>
-              <span className="flex items-center gap-1.5">
-                <Image className="h-4 w-4 text-primary" /> High Quality
-              </span>
+              {[
+                "Cinematic movie poster",
+                "Anime portrait",
+                "Cyberpunk city",
+                "Luxury product shot",
+              ].map((t) => (
+                <button
+                  key={t}
+                  onClick={() => setPrompt(t)}
+                  className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 transition hover:border-purple-400/40 hover:text-white"
+                >
+                  {t}
+                </button>
+              ))}
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="mt-8 flex flex-wrap items-center gap-6 text-xs text-neutral-500"
+            >
+              <div className="flex items-center gap-1.5">
+                <div className="flex -space-x-2">
+                  {["A", "B", "C"].map((c, i) => (
+                    <div
+                      key={c}
+                      className={`grid h-6 w-6 place-items-center rounded-full border border-[#05060d] text-[10px] font-bold ${
+                        i === 0
+                          ? "bg-indigo-500"
+                          : i === 1
+                            ? "bg-purple-500"
+                            : "bg-cyan-500"
+                      }`}
+                    >
+                      {c}
+                    </div>
+                  ))}
+                </div>
+                <span className="ml-2 text-neutral-300">500K+ creators</span>
+              </div>
+              <div className="flex items-center gap-1">
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <Star
+                    key={i}
+                    className="h-3.5 w-3.5 fill-amber-400 text-amber-400"
+                  />
+                ))}
+                <span className="ml-1 text-neutral-300">4.9 / 5</span>
+              </div>
             </motion.div>
           </div>
-        </section>
 
-        {/* Stats */}
-        <section className="border-y border-border bg-muted/20 px-4 py-12">
-          <div className="mx-auto grid max-w-5xl grid-cols-2 gap-8 md:grid-cols-4">
-            {[
-              { label: "Images generated", value: "1M+" },
-              { label: "Active creators", value: "50K+" },
-              { label: "Styles", value: "6+" },
-              { label: "Avg. generation time", value: "< 5s" },
-            ].map((stat) => (
-              <div key={stat.label} className="text-center">
-                <div className="text-3xl font-bold text-foreground md:text-4xl">
-                  {stat.value}
-                </div>
-                <div className="mt-1 text-sm text-muted-foreground">
-                  {stat.label}
-                </div>
-              </div>
-            ))}
+          {/* Floating artwork */}
+          <div className="relative h-[480px]">
+            {ARTWORK.map((art, i) => {
+              const positions = [
+                "top-0 right-8 rotate-[-6deg]",
+                "top-24 left-0 rotate-[4deg]",
+                "bottom-0 right-0 rotate-[-2deg]",
+              ];
+              return (
+                <motion.div
+                  key={art.label}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.7, delay: 0.15 * i }}
+                  className={`absolute w-56 md:w-64 ${positions[i]}`}
+                >
+                  <motion.div
+                    animate={{ y: [0, -12, 0] }}
+                    transition={{
+                      duration: 6 + i,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    }}
+                    className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-1.5 shadow-[0_20px_60px_-15px_rgba(139,92,246,0.55)] backdrop-blur-xl"
+                  >
+                    <img
+                      src={art.src}
+                      alt={art.label}
+                      className="h-72 w-full rounded-xl object-cover"
+                    />
+                    <div className="pointer-events-none absolute inset-1.5 rounded-xl bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+                    <div className="absolute bottom-3 left-4 text-xs font-medium text-white/90">
+                      {art.label}
+                    </div>
+                  </motion.div>
+                </motion.div>
+              );
+            })}
+
+            {/* Floating geometric shapes */}
+            <motion.div
+              animate={{ y: [0, 15, 0], rotate: [0, 90, 0] }}
+              transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute top-8 left-24 h-10 w-10 rounded-lg border border-cyan-400/40 bg-cyan-400/10 backdrop-blur"
+            />
+            <motion.div
+              animate={{ y: [0, -20, 0] }}
+              transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute bottom-10 left-16 h-14 w-14 rounded-full border border-fuchsia-400/40 bg-fuchsia-400/10 backdrop-blur"
+            />
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Features */}
-        <section className="px-4 py-20 md:py-28">
-          <div className="mx-auto max-w-6xl">
-            <div className="mb-12 text-center">
-              <h2 className="text-3xl font-bold tracking-tight text-foreground md:text-4xl">
-                Everything you need to create
-              </h2>
-              <p className="mt-4 text-muted-foreground">
-                Powerful tools designed for speed, quality, and creative
-                freedom.
+      {/* FEATURES */}
+      <section className="relative z-10 mx-auto max-w-7xl px-6 py-24">
+        <div className="mb-14 flex flex-col items-start justify-between gap-4 md:flex-row md:items-end">
+          <div>
+            <span className="text-xs font-medium uppercase tracking-widest text-purple-300">
+              Creative suite
+            </span>
+            <h2 className="mt-3 text-3xl font-bold tracking-tight md:text-5xl">
+              A studio for every idea
+            </h2>
+            <p className="mt-3 max-w-xl text-neutral-400">
+              Six powerful tools that work together — from first spark to
+              polished final asset.
+            </p>
+          </div>
+          <Button
+            variant="outline"
+            className="border-white/10 bg-white/[0.03] text-white hover:bg-white/[0.06]"
+          >
+            Explore all tools <ArrowRight className="h-4 w-4" />
+          </Button>
+        </div>
+
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {FEATURES.map((f, i) => (
+            <motion.div
+              key={f.title}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: i * 0.05 }}
+              whileHover={{ y: -4 }}
+              className="group relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03] p-6 backdrop-blur-xl transition-all hover:border-white/20 hover:bg-white/[0.05]"
+            >
+              <div
+                className={`absolute -top-16 -right-16 h-40 w-40 rounded-full bg-gradient-to-br ${f.gradient} opacity-20 blur-3xl transition-opacity group-hover:opacity-40`}
+              />
+              <div
+                className={`relative mb-5 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br ${f.gradient} shadow-lg`}
+              >
+                <f.icon className="h-6 w-6 text-white" strokeWidth={1.8} />
+              </div>
+              <h3 className="text-lg font-semibold">{f.title}</h3>
+              <p className="mt-2 text-sm text-neutral-400">{f.desc}</p>
+              <div className="mt-5 inline-flex items-center gap-1 text-sm text-purple-300 opacity-0 transition-opacity group-hover:opacity-100">
+                Try it <ArrowRight className="h-3.5 w-3.5" />
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="relative z-10 mx-auto max-w-7xl px-6 py-24">
+        <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-indigo-600/20 via-purple-600/20 to-cyan-500/20 p-10 backdrop-blur-xl md:p-16">
+          <div className="absolute -top-24 -left-24 h-72 w-72 rounded-full bg-purple-500/30 blur-3xl" />
+          <div className="absolute -bottom-24 -right-24 h-72 w-72 rounded-full bg-cyan-500/30 blur-3xl" />
+          <div className="relative flex flex-col items-start justify-between gap-6 md:flex-row md:items-center">
+            <div>
+              <h3 className="text-3xl font-bold tracking-tight md:text-4xl">
+                Start creating with 360 Angle today
+              </h3>
+              <p className="mt-3 max-w-lg text-neutral-300">
+                Join hundreds of thousands of creators using AI to bring their
+                boldest ideas to life.
               </p>
             </div>
-
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {features.map((feature, i) => (
-                <motion.div
-                  key={feature.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: i * 0.05 }}
-                >
-                  <Card className="h-full">
-                    <CardHeader>
-                      <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary">
-                        <feature.icon className="h-5 w-5" />
-                      </div>
-                      <CardTitle>{feature.title}</CardTitle>
-                      <CardDescription>{feature.description}</CardDescription>
-                    </CardHeader>
-                  </Card>
-                </motion.div>
-              ))}
+            <div className="flex gap-3">
+              <Button className="rounded-xl bg-white text-black hover:bg-white/90">
+                Get Started Free
+              </Button>
+              <Button
+                variant="outline"
+                className="rounded-xl border-white/20 bg-white/5 text-white hover:bg-white/10"
+              >
+                See Pricing
+              </Button>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* How it works */}
-        <section className="bg-muted/20 px-4 py-20 md:py-28">
-          <div className="mx-auto max-w-5xl">
-            <div className="mb-12 text-center">
-              <h2 className="text-3xl font-bold tracking-tight text-foreground md:text-4xl">
-                How it works
-              </h2>
-              <p className="mt-4 text-muted-foreground">
-                From idea to image in three simple steps.
-              </p>
-            </div>
-
-            <div className="grid gap-6 md:grid-cols-3">
-              {steps.map((step, i) => (
-                <motion.div
-                  key={step.step}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: i * 0.1 }}
-                >
-                  <Card className="h-full">
-                    <CardContent className="pt-6">
-                      <div className="text-4xl font-bold text-primary/30">
-                        {step.step}
-                      </div>
-                      <h3 className="mt-4 text-lg font-semibold text-foreground">
-                        {step.title}
-                      </h3>
-                      <p className="mt-2 text-sm text-muted-foreground">
-                        {step.description}
-                      </p>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* CTA */}
-        <section className="px-4 py-20 md:py-28">
-          <div className="mx-auto max-w-5xl">
-            <Card className="overflow-hidden border-0 bg-primary text-primary-foreground">
-              <div className="relative px-6 py-16 text-center md:px-12">
-                <div className="absolute inset-0 -z-10 opacity-20">
-                  <div className="absolute top-0 left-0 h-64 w-64 rounded-full bg-white blur-3xl" />
-                  <div className="absolute bottom-0 right-0 h-64 w-64 rounded-full bg-white blur-3xl" />
-                </div>
-                <h2 className="text-3xl font-bold tracking-tight md:text-4xl">
-                  Ready to create something amazing?
-                </h2>
-                <p className="mx-auto mt-4 max-w-xl text-primary-foreground/80">
-                  Join thousands of creators using Lumen to bring their ideas
-                  to life.
-                </p>
-                <div className="mt-8">
-                  <Button size="lg" variant="secondary" asChild>
-                    <Link to="/generate">
-                      Generate your first image <ArrowRight className="h-4 w-4" />
-                    </Link>
-                  </Button>
-                </div>
-              </div>
-            </Card>
-          </div>
-        </section>
-      </main>
-
-      <SiteFooter />
+      {/* FOOTER */}
+      <footer className="relative z-10 border-t border-white/5 py-10 text-center text-xs text-neutral-500">
+        © {new Date().getFullYear()} 360 Angle. All rights reserved.
+      </footer>
     </div>
   );
 }
