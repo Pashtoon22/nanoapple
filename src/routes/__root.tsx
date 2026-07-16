@@ -77,8 +77,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lumen — Free AI Image Generator" },
-      { name: "description", content: "Generate stunning AI images from text prompts. Free, fast, and beautiful." },
+      { title: "Lumen — AI Image Generation Platform" },
+      { name: "description", content: "Generate stunning AI images from text prompts. Fast, safe, and beautiful." },
       { property: "og:title", content: "Lumen — Free AI Image Generator" },
       { property: "og:description", content: "Generate stunning AI images from text prompts. Free, fast, and beautiful." },
       { property: "og:type", content: "website" },
