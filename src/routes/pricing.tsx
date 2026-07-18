@@ -32,52 +32,44 @@ export const Route = createFileRoute("/pricing")({
 });
 
 const plans = [
+type PlanKey = "free" | "pro" | "enterprise";
+const plans: Array<{
+  name: string; key: PlanKey; price: string; period?: string;
+  description: string; features: string[]; featured: boolean;
+}> = [
   {
-    name: "Free",
-    price: "$0",
+    name: "Free", key: "free", price: "$0",
     description: "Perfect for experimenting and personal projects.",
     features: [
-      "20 generations per month",
+      "20 image generations per day",
+      "3 AI videos per day",
       "Standard quality",
-      "1:1 and 16:9 ratios",
-      "Community support",
+      "Watermarked downloads",
     ],
-    cta: "Get Started",
-    href: "/generate",
     featured: false,
   },
   {
-    name: "Pro",
-    price: "$12",
-    period: "/month",
-    description: "For creators who need more power and flexibility.",
+    name: "Pro", key: "pro", price: "$12", period: "/month",
+    description: "For creators who need more power.",
     features: [
-      "500 generations per month",
-      "HD & Ultra HD quality",
-      "All aspect ratios",
-      "Batch generation up to 4 images",
-      "Priority speed",
-      "Email support",
+      "Unlimited image generation",
+      "Up to 200 AI videos per month",
+      "HD downloads, no watermark",
+      "Faster generation & priority queue",
+      "Premium AI models",
     ],
-    cta: "Upgrade to Pro",
-    href: "/generate",
     featured: true,
   },
   {
-    name: "Team",
-    price: "$49",
-    period: "/month",
-    description: "Collaborate with your team at scale.",
+    name: "Enterprise", key: "enterprise", price: "$49", period: "/month",
+    description: "For teams and commercial workflows.",
     features: [
-      "Unlimited generations",
-      "Ultra HD quality",
-      "All aspect ratios",
-      "Shared workspace",
+      "Unlimited everything",
       "API access",
-      "Priority support",
+      "Team workspace",
+      "Commercial usage",
+      "Dedicated support & analytics",
     ],
-    cta: "Contact Sales",
-    href: "/contact",
     featured: false,
   },
 ];
