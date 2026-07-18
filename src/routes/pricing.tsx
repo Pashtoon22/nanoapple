@@ -31,7 +31,6 @@ export const Route = createFileRoute("/pricing")({
   }),
 });
 
-const plans = [
 type PlanKey = "free" | "pro" | "enterprise";
 const plans: Array<{
   name: string; key: PlanKey; price: string; period?: string;
