@@ -1,6 +1,7 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { motion } from "framer-motion";
-import { Check } from "lucide-react";
+import { Check, Crown } from "lucide-react";
+import { useServerFn } from "@tanstack/react-start";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -11,6 +12,10 @@ import {
 } from "@/components/ui/card";
 import { SiteHeader } from "@/components/site/Header";
 import { SiteFooter } from "@/components/site/Footer";
+import { useAuth } from "@/hooks/useAuth";
+import { createCheckoutSession } from "@/lib/billing.functions";
+import { toast } from "sonner";
+import { Toaster } from "@/components/ui/sonner";
 
 export const Route = createFileRoute("/pricing")({
   component: PricingPage,
