@@ -74,6 +74,31 @@ const plans: Array<{
 ];
 
 function PricingPage() {
+  const { user, isOwner, tier } = useAuth();
+  const navigate = useNavigate();
+  const checkout = useServerFn(createCheckoutSession);
+
+  async function handleSelect(plan: (typeof plans)[number]) {
+    if (plan.key === "free") {
+      navigate({ to: user ? "/generate" : "/auth", search: user ? undefined : { redirect: "/generate" } });
+      return;
+    }
+    if (!user) {
+      navigate({ to: "/auth", search: { redirect: "/pricing" } });
+      return;
+    }
+    if (isOwner) {
+      toast.success("You already have unlimited access as the owner.");
+      return;
+    }
+    try {
+      const res = await checkout({ data: { tier: plan.key } });
+      if (res.url) window.location.href = res.url;
+      else toast.info("Checkout is Stripe-ready. Add STRIPE_SECRET_KEY to enable live payments.");
+    } catch (err: any) {
+      toast.error(err?.message ?? "Checkout failed");
+    }
+  }
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <SiteHeader />
@@ -134,13 +159,19 @@ function PricingPage() {
                       </ul>
                     </CardContent>
                     <div className="p-6 pt-0">
-                      <Button
-                        className="w-full"
-                        variant={plan.featured ? "default" : "outline"}
-                        asChild
-                      >
-                        <Link to={plan.href}>{plan.cta}</Link>
-                      </Button>
+                      {isOwner ? (
+                        <Button className="w-full" variant="outline" disabled>
+                          <Crown className="mr-2 h-4 w-4 text-purple-500" /> Owner — unlimited
+                        </Button>
+                      ) : (
+                        <Button
+                          className="w-full"
+                          variant={plan.featured ? "default" : "outline"}
+                          onClick={() => handleSelect(plan)}
+                        >
+                          {plan.key === "free" ? "Get started" : (tier === plan.key ? "Current plan" : `Upgrade to ${plan.name}`)}
+                        </Button>
+                      )}
                     </div>
                   </Card>
                 </motion.div>
