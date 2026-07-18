@@ -23,9 +23,10 @@ export const generateImage = createServerFn({ method: "POST" })
     const { data: creditRes, error: cErr } = await context.supabase
       .rpc("consume_image_credit", { _user_id: context.userId });
     if (cErr) throw new Error(cErr.message);
-    if (creditRes && creditRes.ok === false) {
+    const cr = creditRes as { ok?: boolean; used?: number; limit?: number } | null;
+    if (cr && cr.ok === false) {
       throw new Error(
-        `Daily image limit reached (${creditRes.used}/${creditRes.limit}). Upgrade to Pro for unlimited generations.`
+        `Daily image limit reached (${cr.used}/${cr.limit}). Upgrade to Pro for unlimited generations.`
       );
     }
 
