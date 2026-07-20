@@ -14,6 +14,7 @@ import {
   Trash2,
   Check,
   Wand2,
+  AlertTriangle,
 } from "lucide-react";
 import { generateImage } from "@/lib/generate-image.functions";
 import { useAuth } from "@/hooks/useAuth";
@@ -83,12 +84,14 @@ function Home() {
   const [results, setResults] = useState<
     { urls: string[]; prompt: string; ms: number }[]
   >([]);
+  const [generationNotice, setGenerationNotice] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
 
   const generateFn = useServerFn(generateImage);
 
   const mutation = useMutation({
     mutationFn: async () => {
+      setGenerationNotice(null);
       const started = performance.now();
       const enhanced = `${prompt.trim()}${
         cinematic ? `. Style: ${style}. ${STYLE_ENHANCEMENTS[style]}. Quality: ${quality}.` : ""
@@ -98,10 +101,20 @@ function Home() {
           generateFn({ data: { prompt: enhanced, aspectRatio: aspect } }),
         ),
       );
+      const failed = results.find((r) => r.error);
+      if (failed?.error) {
+        return { urls: [], ms: performance.now() - started, notice: failed.error };
+      }
       const ms = performance.now() - started;
-      return { urls: results.map((r) => r.imageUrl), ms };
+      return { urls: results.map((r) => r.imageUrl).filter(Boolean), ms, notice: null };
     },
     onSuccess: (res) => {
+      if (res.notice) {
+        setGenerationNotice(res.notice);
+        setResults([]);
+        toast.error(res.notice);
+        return;
+      }
       setResults([{ urls: res.urls, prompt: prompt.trim(), ms: res.ms }]);
       toast.success(`Generated ${res.urls.length} image${res.urls.length > 1 ? "s" : ""}`);
     },
@@ -383,7 +396,9 @@ function Home() {
               </div>
 
               {/* image grid */}
-              {shown.length === 0 && !mutation.isPending ? (
+              {generationNotice && !mutation.isPending ? (
+                <CreditNotice message={generationNotice} />
+              ) : shown.length === 0 && !mutation.isPending ? (
                 <EmptyState onSuggest={setPrompt} />
               ) : mutation.isPending ? (
                 <GridSkeleton count={count} />
@@ -555,6 +570,18 @@ function EmptyState({ onSuggest }: { onSuggest: (p: string) => void }) {
           </button>
         ))}
       </div>
+    </div>
+  );
+}
+
+function CreditNotice({ message }: { message: string }) {
+  return (
+    <div className="flex flex-col items-center justify-center rounded-2xl border border-amber-400/20 bg-amber-400/10 px-6 py-16 text-center">
+      <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl border border-amber-400/35 bg-amber-400/10 shadow-[0_0_30px_rgba(251,191,36,0.18)]">
+        <AlertTriangle className="h-6 w-6 text-amber-300" />
+      </div>
+      <div className="text-lg font-semibold text-amber-100">AI credits exhausted</div>
+      <p className="mt-2 max-w-md text-sm leading-relaxed text-amber-100/70">{message}</p>
     </div>
   );
 }
