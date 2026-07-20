@@ -101,6 +101,11 @@ const ARTWORK = [
 function Landing() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [prompt, setPrompt] = useState("");
+  const navigate = useNavigate();
+  const goGenerate = () => {
+    const p = prompt.trim();
+    navigate({ to: "/generate", search: p ? { prompt: p } : undefined as never });
+  };
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-[#05060d] font-sans text-white antialiased">
