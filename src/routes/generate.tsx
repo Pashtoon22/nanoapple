@@ -69,7 +69,9 @@ const STYLE_ENHANCEMENTS: Record<string, string> = {
 
 function Home() {
   const [prompt, setPrompt] = useState(
-    "a futuristic city at night with flying cars and neon lights",
+  const search = Route.useSearch();
+  const [prompt, setPrompt] = useState(
+    search.prompt ?? "a futuristic city at night with flying cars and neon lights",
   );
   const [style, setStyle] = useState<(typeof STYLES)[number]>("Cinematic");
   const [count, setCount] = useState<Count>(4);
