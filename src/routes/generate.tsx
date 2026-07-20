@@ -31,6 +31,9 @@ import { Toaster } from "@/components/ui/sonner";
 
 export const Route = createFileRoute("/generate")({
   component: Home,
+  validateSearch: (s: Record<string, unknown>) => ({
+    prompt: typeof s.prompt === "string" ? s.prompt : undefined,
+  }),
 });
 
 type Aspect = "1:1" | "16:9" | "9:16" | "4:3" | "3:4";
