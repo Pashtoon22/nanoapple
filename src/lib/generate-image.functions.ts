@@ -47,8 +47,21 @@ export const generateImage = createServerFn({ method: "POST" })
 
     if (!res.ok) {
       const text = await res.text();
-      if (res.status === 429) throw new Error("Rate limit reached. Try again later.");
-      if (res.status === 402) throw new Error("AI credits exhausted.");
+      if (res.status === 429) {
+        return {
+          imageUrl: null,
+          error: "Rate limit reached. Try again later.",
+          code: "rate_limited" as const,
+        };
+      }
+      if (res.status === 402) {
+        return {
+          imageUrl: null,
+          error:
+            "AI credits are exhausted. Add credits in Settings → Plans & credits, then try again.",
+          code: "credits_exhausted" as const,
+        };
+      }
       throw new Error(`Generation failed: ${text}`);
     }
 
@@ -71,5 +84,5 @@ export const generateImage = createServerFn({ method: "POST" })
       aspect_ratio: data.aspectRatio,
     });
 
-    return { imageUrl };
+    return { imageUrl, error: null, code: null };
   });
