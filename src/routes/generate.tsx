@@ -68,7 +68,6 @@ const STYLE_ENHANCEMENTS: Record<string, string> = {
 };
 
 function Home() {
-  const [prompt, setPrompt] = useState(
   const search = Route.useSearch();
   const [prompt, setPrompt] = useState(
     search.prompt ?? "a futuristic city at night with flying cars and neon lights",
