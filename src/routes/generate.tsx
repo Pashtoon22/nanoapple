@@ -106,7 +106,13 @@ function Home() {
         return { urls: [], ms: performance.now() - started, notice: failed.error };
       }
       const ms = performance.now() - started;
-      return { urls: results.map((r) => r.imageUrl).filter(Boolean), ms, notice: null };
+      return {
+        urls: results
+          .map((r) => r.imageUrl)
+          .filter((url): url is string => Boolean(url)),
+        ms,
+        notice: null,
+      };
     },
     onSuccess: (res) => {
       if (res.notice) {
