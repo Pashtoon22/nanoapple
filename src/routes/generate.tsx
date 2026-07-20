@@ -109,7 +109,15 @@ function Home() {
     onError: (err: Error) => toast.error(err.message),
   });
 
+  const { user } = useAuth();
+  const navigate = useNavigate();
+
   const onGenerate = () => {
+    if (!user) {
+      toast.error("Please sign in to generate images");
+      navigate({ to: "/auth" });
+      return;
+    }
     if (!prompt.trim()) return toast.error("Please enter a prompt");
     if (prompt.length > 500) return toast.error("Prompt must be under 500 characters");
     mutation.mutate();
