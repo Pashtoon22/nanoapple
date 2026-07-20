@@ -16,6 +16,8 @@ import {
   Wand2,
 } from "lucide-react";
 import { generateImage } from "@/lib/generate-image.functions";
+import { useAuth } from "@/hooks/useAuth";
+import { useNavigate } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
