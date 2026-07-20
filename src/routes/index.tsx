@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -101,6 +101,11 @@ const ARTWORK = [
 function Landing() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [prompt, setPrompt] = useState("");
+  const navigate = useNavigate();
+  const goGenerate = () => {
+    const p = prompt.trim();
+    navigate({ to: "/generate", search: p ? { prompt: p } : undefined as never });
+  };
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-[#05060d] font-sans text-white antialiased">
@@ -244,14 +249,19 @@ function Landing() {
                     onChange={(e) => setPrompt(e.target.value)}
                     placeholder="Describe anything you imagine..."
                     className="w-full bg-transparent py-3 text-[15px] text-white placeholder:text-neutral-500 focus:outline-none"
+                    onKeyDown={(e) => { if (e.key === "Enter") goGenerate(); }}
                   />
                 </div>
-                <Button className="h-11 shrink-0 rounded-xl bg-gradient-to-r from-indigo-500 via-purple-500 to-cyan-400 px-5 font-medium text-white shadow-[0_0_25px_rgba(139,92,246,0.5)] hover:opacity-95">
+                <Button
+                  onClick={goGenerate}
+                  className="h-11 shrink-0 rounded-xl bg-gradient-to-r from-indigo-500 via-purple-500 to-cyan-400 px-5 font-medium text-white shadow-[0_0_25px_rgba(139,92,246,0.5)] hover:opacity-95"
+                >
                   <Sparkles className="h-4 w-4" />
                   Generate
                 </Button>
               </div>
             </motion.div>
+
 
             <motion.div
               initial={{ opacity: 0, y: 16 }}

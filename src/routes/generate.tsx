@@ -31,6 +31,9 @@ import { Toaster } from "@/components/ui/sonner";
 
 export const Route = createFileRoute("/generate")({
   component: Home,
+  validateSearch: (s: Record<string, unknown>) => ({
+    prompt: typeof s.prompt === "string" ? s.prompt : undefined,
+  }),
 });
 
 type Aspect = "1:1" | "16:9" | "9:16" | "4:3" | "3:4";
@@ -65,8 +68,9 @@ const STYLE_ENHANCEMENTS: Record<string, string> = {
 };
 
 function Home() {
+  const search = Route.useSearch();
   const [prompt, setPrompt] = useState(
-    "a futuristic city at night with flying cars and neon lights",
+    search.prompt ?? "a futuristic city at night with flying cars and neon lights",
   );
   const [style, setStyle] = useState<(typeof STYLES)[number]>("Cinematic");
   const [count, setCount] = useState<Count>(4);
