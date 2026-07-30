@@ -142,3 +142,20 @@
     color: var(--color-foreground);
   }
 }
+
+/* ---- Resume sheet (A4) ---- */
+.resume-sheet {
+  width: 210mm;
+  min-height: 297mm;
+  background: #fff;
+}
+
+@media print {
+  @page { size: A4; margin: 0; }
+  body { background: #fff; }
+  .no-print { display: none !important; }
+  .print-area { border: 0 !important; padding: 0 !important; background: #fff !important; overflow: visible !important; }
+  .print-area > div { transform: none !important; box-shadow: none !important; width: auto !important; }
+  .resume-sheet { box-shadow: none !important; width: 210mm; }
+  .break-inside-avoid { break-inside: avoid; }
+}
