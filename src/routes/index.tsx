@@ -42,10 +42,10 @@ export const Route = createFileRoute("/")({
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { property: "og:title", content: "Architect CV Studio — AI Resume Builder" },
+      { property: "og:title", content: "Architect CV Studio — AI Resume Builder for Designers" },
       {
         property: "og:description",
-        content: "AI-assisted, print-ready CV builder for senior architectural designers.",
+        content: "Build a print-ready architectural CV: AI parsing of your existing resume, live A4 preview, project portfolio, skill bars and ATS scoring.",
       },
     ],
     links: [
