@@ -159,3 +159,49 @@
   .resume-sheet { box-shadow: none !important; width: 210mm; }
   .break-inside-avoid { break-inside: avoid; }
 }
+
+/* ---- Executive CV / Cover letter (A4, black-white-gold) ---- */
+.exec-sheet {
+  width: 210mm;
+  height: 297mm;
+  overflow: hidden;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+}
+.exec-topbar {
+  height: 4mm;
+  background: linear-gradient(90deg, #111214 0%, #111214 62%, #c9a227 62%, #c9a227 100%);
+}
+.exec-footer {
+  display: flex;
+  align-items: center;
+  gap: 4mm;
+  padding: 0 14mm 6mm;
+  font-size: 7pt;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #6b6e76;
+}
+.exec-footer-rule {
+  flex: 1;
+  height: 1px;
+  background: #c9a227;
+  opacity: 0.6;
+}
+.exec-side {
+  margin: -9mm -14mm -6mm 0;
+  padding-top: 9mm !important;
+  padding-bottom: 6mm !important;
+}
+
+@media print {
+  .exec-doc { gap: 0 !important; }
+  .exec-sheet {
+    box-shadow: none !important;
+    break-after: page;
+    page-break-after: always;
+  }
+  .exec-doc .exec-sheet:last-child { break-after: auto; page-break-after: auto; }
+  body.print-cv #exec-letter-wrap { display: none !important; }
+  body.print-letter #exec-cv-wrap { display: none !important; }
+  main { padding: 0 !important; max-width: none !important; }
+}

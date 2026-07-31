@@ -14,6 +14,7 @@ import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as GenerateRouteImport } from './routes/generate'
 import { Route as FeaturesRouteImport } from './routes/features'
+import { Route as ExecutiveRouteImport } from './routes/executive'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AboutRouteImport } from './routes/about'
@@ -45,6 +46,11 @@ const GenerateRoute = GenerateRouteImport.update({
 const FeaturesRoute = FeaturesRouteImport.update({
   id: '/features',
   path: '/features',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ExecutiveRoute = ExecutiveRouteImport.update({
+  id: '/executive',
+  path: '/executive',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -87,6 +93,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
+  '/executive': typeof ExecutiveRoute
   '/features': typeof FeaturesRoute
   '/generate': typeof GenerateRoute
   '/pricing': typeof PricingRoute
@@ -100,6 +107,7 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
+  '/executive': typeof ExecutiveRoute
   '/features': typeof FeaturesRoute
   '/generate': typeof GenerateRoute
   '/pricing': typeof PricingRoute
@@ -115,6 +123,7 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
+  '/executive': typeof ExecutiveRoute
   '/features': typeof FeaturesRoute
   '/generate': typeof GenerateRoute
   '/pricing': typeof PricingRoute
@@ -130,6 +139,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/auth'
     | '/contact'
+    | '/executive'
     | '/features'
     | '/generate'
     | '/pricing'
@@ -143,6 +153,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/auth'
     | '/contact'
+    | '/executive'
     | '/features'
     | '/generate'
     | '/pricing'
@@ -157,6 +168,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/auth'
     | '/contact'
+    | '/executive'
     | '/features'
     | '/generate'
     | '/pricing'
@@ -172,6 +184,7 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   AuthRoute: typeof AuthRoute
   ContactRoute: typeof ContactRoute
+  ExecutiveRoute: typeof ExecutiveRoute
   FeaturesRoute: typeof FeaturesRoute
   GenerateRoute: typeof GenerateRoute
   PricingRoute: typeof PricingRoute
@@ -214,6 +227,13 @@ declare module '@tanstack/react-router' {
       path: '/features'
       fullPath: '/features'
       preLoaderRoute: typeof FeaturesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/executive': {
+      id: '/executive'
+      path: '/executive'
+      fullPath: '/executive'
+      preLoaderRoute: typeof ExecutiveRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contact': {
@@ -287,6 +307,7 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   AuthRoute: AuthRoute,
   ContactRoute: ContactRoute,
+  ExecutiveRoute: ExecutiveRoute,
   FeaturesRoute: FeaturesRoute,
   GenerateRoute: GenerateRoute,
   PricingRoute: PricingRoute,
