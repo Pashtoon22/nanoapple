@@ -111,7 +111,7 @@ function Bullets({ items }: { items: string[] }) {
 
 /* ---------------- sidebar ---------------- */
 
-function Sidebar({ variant }: { variant: 1 | 2 | 3 }) {
+function Sidebar({ variant }: { variant: 1 | 2 | 3 | 4 }) {
   return (
     <aside className="exec-side flex w-[62mm] shrink-0 flex-col gap-[5mm] bg-[#111214] px-[6mm] py-[6mm]">
       {variant === 1 && (
