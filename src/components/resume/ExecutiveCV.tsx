@@ -233,6 +233,29 @@ function Sidebar({ variant }: { variant: 1 | 2 | 3 }) {
           </div>
 
           <div>
+            <SideTitle icon={Compass}>Sector Experience</SideTitle>
+            <ul className="space-y-[1.6mm] text-[8pt] leading-[1.4] text-white/85">
+              {[
+                "Education & healthcare facilities",
+                "Religious & community buildings",
+                "Humanitarian & donor programmes",
+                "Water, sanitation & hygiene (WASH)",
+                "Commercial & residential development",
+                "Urban planning & town zoning",
+              ].map((s) => (
+                <li key={s} className="flex gap-[2mm]">
+                  <span className="mt-[1.6mm] h-[1.1mm] w-[1.1mm] shrink-0 rotate-45 bg-[#C9A227]" />
+                  {s}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </>
+      )}
+
+      {variant === 4 && (
+        <>
+          <div>
             <SideTitle icon={Users}>References</SideTitle>
             <ul className="space-y-[3mm] text-[8pt] leading-[1.4] text-white/85">
               {references.map((r) => (
@@ -246,12 +269,23 @@ function Sidebar({ variant }: { variant: 1 | 2 | 3 }) {
             </ul>
           </div>
 
+          <div>
+            <SideTitle icon={Mail}>Contact</SideTitle>
+            <ul className="space-y-[1.6mm] text-[8.2pt] leading-[1.35] text-white/85">
+              <li className="break-all">{execProfile.phone}</li>
+              <li className="break-all">{execProfile.email}</li>
+              <li>{execProfile.location}</li>
+              <li className="break-all">{execProfile.linkedin}</li>
+            </ul>
+          </div>
+
           <div className="mt-auto border-t border-white/15 pt-[3mm] text-[7.4pt] leading-[1.4] text-white/60">
-            References, certificates and a full project portfolio are available on
-            request.
+            Certificates, detailed drawings and a full project portfolio are
+            available on request.
           </div>
         </>
       )}
+
     </aside>
   );
 }
