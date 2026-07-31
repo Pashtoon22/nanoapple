@@ -297,7 +297,7 @@ function ExperienceBlock({ item }: { item: (typeof experience)[number] }) {
 /* ---------------- pages ---------------- */
 
 export function ExecutiveCV() {
-  const total = 3;
+  const total = 4;
   return (
     <div id="exec-cv" className="exec-doc flex flex-col items-center gap-6">
       {/* PAGE 1 */}
@@ -317,7 +317,7 @@ export function ExecutiveCV() {
             </section>
             <section>
               <SectionTitle icon={Building2}>Professional Experience</SectionTitle>
-              {experience.slice(0, 2).map((e) => (
+              {experience.slice(0, 1).map((e) => (
                 <ExperienceBlock key={e.company} item={e} />
               ))}
             </section>
@@ -334,7 +334,7 @@ export function ExecutiveCV() {
               <SectionTitle icon={Building2}>
                 Professional Experience (continued)
               </SectionTitle>
-              {experience.slice(2, 6).map((e) => (
+              {experience.slice(1, 4).map((e) => (
                 <ExperienceBlock key={e.company} item={e} />
               ))}
             </section>
@@ -347,15 +347,23 @@ export function ExecutiveCV() {
       <Sheet page={3} total={total}>
         <div className="flex h-full gap-[7mm]">
           <div className="flex-1">
-            <section className="mb-[5mm]">
+            <section>
               <SectionTitle icon={Building2}>
                 Professional Experience (continued)
               </SectionTitle>
-              {experience.slice(6).map((e) => (
+              {experience.slice(4).map((e) => (
                 <ExperienceBlock key={e.company} item={e} />
               ))}
             </section>
+          </div>
+          <Sidebar variant={3} />
+        </div>
+      </Sheet>
 
+      {/* PAGE 4 */}
+      <Sheet page={4} total={total}>
+        <div className="flex h-full gap-[7mm]">
+          <div className="flex-1">
             <section className="mb-[5mm]">
               <SectionTitle icon={ListChecks}>Key Responsibilities</SectionTitle>
               <Bullets items={keyResponsibilities} />
@@ -404,9 +412,10 @@ export function ExecutiveCV() {
               </div>
             </section>
           </div>
-          <Sidebar variant={3} />
+          <Sidebar variant={4} />
         </div>
       </Sheet>
     </div>
   );
 }
+
